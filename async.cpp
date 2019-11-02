@@ -2,6 +2,7 @@
 
 
 static mutex_t mutex_add_handle;
+mutex_t mutex_callback_call;
 
 static thread_t handles[100];
 static int handles_count;
@@ -26,6 +27,7 @@ void async_clean()
     }
 
     mutex_destroy(&mutex_add_handle);
+    mutex_destroy(&mutex_callback_call);
 }
 void async_wait()
 {
@@ -44,4 +46,5 @@ void add_handler(thread_t handle)
 void async_init()
 {
     mutex_create(&mutex_add_handle);
+    mutex_create(&mutex_callback_call);
 }

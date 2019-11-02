@@ -11,9 +11,9 @@
     #include <windows.h>
 #elif __linux__
     #include <pthread.h>
+    #include <unistd.h>
 #endif
 
-typedef void(*read_file_callback_t)(const char*);
 
 #ifdef _WIN32
     typedef mutex_t HANDLE;
@@ -23,11 +23,7 @@ typedef void(*read_file_callback_t)(const char*);
     typedef pthread_t thread_t;
 #endif
 
-struct file_data_t
-{
-    const char* file_name;
-    read_file_callback_t callback;
-};
+
 
 
 #ifdef _WIN32

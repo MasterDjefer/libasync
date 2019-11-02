@@ -3,10 +3,17 @@
 
 #include "async.h"
 
+typedef void(*read_file_callback_t)(const char*);
+
+struct file_data_t
+{
+    const char* file_name;
+    read_file_callback_t callback;
+};
+
+extern mutex_t mutex_callback_call;
 
 void read_file(const char* file_name, read_file_callback_t callback);
-void fs_init();
-void fs_clean();
 
 
 #endif // FS_H

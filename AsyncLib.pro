@@ -5,10 +5,12 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     async.cpp \
-    fs.cpp
+    fs.cpp \
+    timer.cpp
 
 LIBS += -pthread
 
 HEADERS += \
     async.h \
-    fs.h
+    fs.h \
+    timer.h

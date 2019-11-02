@@ -1,11 +1,25 @@
 #include "async.h"
 #include "fs.h"
+#include "timer.h"
 
 
 int main()
 {
     async_init();
-    fs_init();
+
+    set_interval([](){
+        printf("sdf\n");
+    }, 2000);
+
+    set_timeout([](){
+        printf("123\n");
+    }, 4000);
+    set_timeout([](){
+        printf("000\n");
+    }, 6000);
+
+
+
 
     printf("haha\n");
 
@@ -28,7 +42,6 @@ int main()
 
     async_wait();
 
-    fs_clean();
     async_clean();
 
     return 0;

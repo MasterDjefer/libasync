@@ -1,11 +1,12 @@
 #include "fs.h"
 
-static mutex_t mutex_callback_call;
 
 declare_thread_func(read_file_func, params)
 {
     const char* file_name = ((file_data_t*)params)->file_name;
     read_file_callback_t callback = ((file_data_t*)params)->callback;
+
+    free(params);
 
     FILE* file;
     file = fopen(file_name, "r");
@@ -37,7 +38,6 @@ declare_thread_func(read_file_func, params)
     callback(buffer);
     mutex_unlock(&mutex_callback_call);
 
-    free(params);
 
     main_counter_dec();
     return 0;
@@ -58,14 +58,4 @@ void read_file(const char* file_name, read_file_callback_t callback)
 
 
     add_handler(thread);
-}
-
-void fs_init()
-{
-    mutex_create(&mutex_callback_call);
-}
-
-void fs_clean()
-{
-    mutex_destroy(&mutex_callback_call);
 }
