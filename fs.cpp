@@ -1,5 +1,18 @@
 #include "fs.h"
 
+#ifdef _WIN32
+int getline(char** buffer, size_t* size, FILE* file_name)
+{
+	*size = 120;
+	*buffer = (char*)malloc(*size);
+	memset(*buffer, 0, *size);
+	fgets(*buffer, *size, file_name);
+	
+	int bytes_read = strlen(*buffer);
+	return bytes_read ? bytes_read : -1;
+}
+#endif
+
 
 declare_thread_func(read_file_func, params)
 {
@@ -13,7 +26,7 @@ declare_thread_func(read_file_func, params)
 
     if (!file)
     {
-        printf("error\n");
+        printf("file not found\n");
         exit(0);
     }
 
@@ -27,8 +40,11 @@ declare_thread_func(read_file_func, params)
     int bytes_read = 0;
     while ((bytes_read = getline(&line, &line_size, file)) != -1)
     {
-        memcpy(buffer + buffer_size, line, line_size);
+        memcpy(buffer + buffer_size, line, bytes_read);
         buffer_size += bytes_read;
+		
+		//free the line memory! malloc used!
+		free(line);
     }
 
     fclose(file);

@@ -7,9 +7,9 @@ int main()
 {
     async_init();
 
-    set_interval([](){
+    /*set_interval([](){
         printf("sdf\n");
-    }, 2000);
+    }, 2000);*/
 
     set_timeout([](){
         printf("123\n");

@@ -23,7 +23,7 @@ void async_clean()
 {
     for (int i = 0; i < handles_count; ++i)
     {
-        thread_destroy(handles[i]);
+        thread_destroy(&handles[i]);
     }
 
     mutex_destroy(&mutex_add_handle);

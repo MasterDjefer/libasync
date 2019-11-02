@@ -5,6 +5,7 @@
 
 
 typedef void(*timeout_callback_t)(void);
+typedef unsigned int uint;
 
 struct timeout_data_t
 {
@@ -12,7 +13,6 @@ struct timeout_data_t
     timeout_callback_t callback;
 };
 
-#define unsigned int uint;
 
 #ifdef _WIN32
     #define sleep(miliseconds) Sleep(miliseconds);

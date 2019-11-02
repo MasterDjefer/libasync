@@ -1,8 +1,9 @@
 #ifndef ASYNC_H
 #define ASYNC_H
 
-
+#include <string>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <functional>
 
@@ -16,8 +17,8 @@
 
 
 #ifdef _WIN32
-    typedef mutex_t HANDLE;
-    typedef thread_t HANDLE;
+    typedef HANDLE mutex_t;
+    typedef HANDLE thread_t;
 #elif __linux__
     typedef pthread_mutex_t mutex_t;
     typedef pthread_t thread_t;
