@@ -3,13 +3,17 @@
 #ifdef _WIN32
 int getline(char** buffer, size_t* size, FILE* file_name)
 {
-	*size = 120;
-	*buffer = (char*)malloc(*size);
-	memset(*buffer, 0, *size);
-	fgets(*buffer, *size, file_name);
-	
-	int bytes_read = strlen(*buffer);
-	return bytes_read ? bytes_read : -1;
+    *size = 120;
+    if (!*buffer)
+    {
+        *buffer = (char*)malloc(*size);
+    }
+
+    memset(*buffer, 0, *size);
+    fgets(*buffer, *size, file_name);
+
+    int bytes_read = strlen(*buffer);
+    return bytes_read ? bytes_read : -1;
 }
 #endif
 
@@ -42,10 +46,10 @@ declare_thread_func(read_file_func, params)
     {
         memcpy(buffer + buffer_size, line, bytes_read);
         buffer_size += bytes_read;
-		
-		//free the line memory! malloc used!
-		free(line);
+
+        //free the line memory! malloc used!
     }
+    free(line);
 
     fclose(file);
 

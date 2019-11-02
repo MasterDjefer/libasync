@@ -7,18 +7,21 @@ int main()
 {
     async_init();
 
-    /*set_interval([](){
-        printf("sdf\n");
-    }, 2000);*/
+//    set_interval([](){
+//        printf("sdf\n");
+//    }, 3000);
 
     set_timeout([](){
         printf("123\n");
-    }, 4000);
+    }, 1000);
     set_timeout([](){
         printf("000\n");
-    }, 6000);
 
+        set_timeout([](){
+            printf("inner\n");
+        }, 2000);
 
+    }, 2000);
 
 
     printf("haha\n");
@@ -41,7 +44,6 @@ int main()
     printf("haha\n");
 
     async_wait();
-
     async_clean();
 
     return 0;
