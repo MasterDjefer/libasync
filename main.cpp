@@ -7,9 +7,13 @@ int main()
 {
     async_init();
 
-//    set_interval([](){
-//        printf("sdf\n");
-//    }, 3000);
+    timers_t timer = set_interval([](){
+        printf("123\n");
+    }, 2000);
+
+//    sleep(5000);
+    clear_timeout(timer);
+
 
     set_timeout([](){
         printf("123\n");
@@ -44,7 +48,6 @@ int main()
     printf("haha\n");
 
     async_wait();
-    async_clean();
 
     return 0;
 }

@@ -40,7 +40,7 @@ declare_thread_func(timeout_func, params)
     return 0;
 }
 
-void set_timeout(timeout_callback_t callback, uint timeout)
+timers_t set_timeout(timeout_callback_t callback, uint timeout)
 {
     main_counter_inc();
 
@@ -53,9 +53,11 @@ void set_timeout(timeout_callback_t callback, uint timeout)
     thread_create(&thread, timeout_func, timeout_data);
 
     add_handler(thread);
+
+    return thread;
 }
 
-void set_interval(timeout_callback_t callback, uint timeout)
+timers_t set_interval(timeout_callback_t callback, uint timeout)
 {
     main_counter_inc();
 
@@ -68,4 +70,13 @@ void set_interval(timeout_callback_t callback, uint timeout)
     thread_create(&thread, timeout_interval_func, timeout_data);
 
     add_handler(thread);
+
+    return thread;
+}
+
+void clear_timeout(timers_t timer)
+{
+    thread_destroy(&timer);
+    main_counter_dec();
+    mutex_unlock(&mutex_callback_call);
 }

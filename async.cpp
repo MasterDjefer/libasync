@@ -16,14 +16,15 @@ void main_counter_inc()
 }
 void main_counter_dec()
 {
-    main_counter--;
+    if (main_counter)
+        main_counter--;
 }
 
 void async_clean()
 {
     for (int i = 0; i < handles_count; ++i)
     {
-        thread_destroy(&handles[i]);
+        thread_close(&handles[i]);
     }
 
     mutex_destroy(&mutex_add_handle);
@@ -32,6 +33,7 @@ void async_clean()
 void async_wait()
 {
     while (main_counter != 0);
+    async_clean();
 }
 
 void add_handler(thread_t handle)
